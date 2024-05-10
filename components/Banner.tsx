@@ -2,7 +2,7 @@ function Banner() {
   return (
     <div>
       <div>
-        <Image />
+        {/* <Image /> */}
       </div>
     </div>
   )
