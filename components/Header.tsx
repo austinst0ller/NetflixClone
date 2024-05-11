@@ -1,6 +1,7 @@
-import { BellIcon, MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaBell } from "react-icons/fa";
+import { IoSearchOutline } from "react-icons/io5";
 
 
 function Header() {
@@ -42,9 +43,9 @@ function Header() {
       </div>
 
       <div className="flex items-center space-x-4 text-sm font-light">
-        <MagnifyingGlassIcon className="hidden h-6 w-6 sm:inline" />
+        <IoSearchOutline className="hidden h-6 w-6 sm:inline" />
         <p className="hidden lg:inline">Kids</p>
-        <BellIcon className="h-6 w-6"/>
+        <FaBell className="h-6 w-6"/>
         <Link href="/account">
           <img 
             src="https://rb.gy/g1pwyx" 
