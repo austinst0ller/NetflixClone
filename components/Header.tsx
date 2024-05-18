@@ -1,3 +1,4 @@
+import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaBell } from "react-icons/fa";
@@ -6,6 +7,7 @@ import { IoSearchOutline } from "react-icons/io5";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const { logout } = useAuth()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,13 +48,14 @@ function Header() {
         <IoSearchOutline className="hidden h-6 w-6 sm:inline" />
         <p className="hidden lg:inline">Kids</p>
         <FaBell className="h-6 w-6"/>
-        <Link href="/account">
-          <img 
+        {/* <Link href="/account"> */}
+          <img
+            onClick={logout}
             src="https://rb.gy/g1pwyx" 
             alt=""
             className="cursor-pointer rounded" 
           />
-        </Link>
+        {/* </Link> */}
       </div>
     </header>
   );
