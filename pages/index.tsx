@@ -1,13 +1,16 @@
-import { modalState } from '@/atoms/modalAtom';
-import Banner from '@/components/Banner';
-import Header from '@/components/Header';
-import Modal from '@/components/Modal';
-import Row from '@/components/Row';
-import useAuth from '@/hooks/useAuth';
-import { Movie } from '@/typings';
-import requests from '@/utils/requests';
-import Head from "next/head";
-import { useRecoilValue } from 'recoil';
+import { modalState } from '@/atoms/modalAtom'
+import Banner from '@/components/Banner'
+import Header from '@/components/Header'
+import Modal from '@/components/Modal'
+import Plans from '@/components/Plans'
+import Row from '@/components/Row'
+import useAuth from '@/hooks/useAuth'
+import payments from '@/lib/stripe'
+import { Movie } from '@/typings'
+import requests from '@/utils/requests'
+import { Product, getProducts } from '@stripe/firestore-stripe-payments'
+import Head from "next/head"
+import { useRecoilValue } from 'recoil'
 
 interface Props {
   netflixOriginals: Movie[]
@@ -18,6 +21,7 @@ interface Props {
   horrorMovies: Movie[]
   romanceMovies: Movie[]
   documentaries: Movie[]
+  products: Product[]
 }
 
 const Home = ({ 
@@ -28,13 +32,18 @@ const Home = ({
   comedyMovies,
   horrorMovies,
   romanceMovies,
-  documentaries
+  documentaries,
+  products
 }: Props) => {
+  console.log(products)
   const { loading } = useAuth()
   const showModal = useRecoilValue(modalState)
+  const subscription = false
 
   // for people with slower internet
-  if (loading) return null
+  if (loading || subscription === null) return null
+
+  if (!subscription) return <Plans />
 
   return (
     <div className='relative h-screen bg-gradient-to-b lg:h-[140vh]'>
@@ -68,6 +77,13 @@ export default Home
 
 
 export const getServerSideProps = async () => {
+  const products = await getProducts(payments, {
+    includePrices: true,
+    activeOnly: true
+  })
+    .then((res) => res)
+    .catch((error) => console.log(error.message))
+
   const [
     netflixOriginals,
     trendingNow,
@@ -98,7 +114,7 @@ export const getServerSideProps = async () => {
       horrorMovies: horrorMovies.results,
       romanceMovies: romanceMovies.results,
       documentaries: documentaries.results,
+      products
     }
   }
-
 }

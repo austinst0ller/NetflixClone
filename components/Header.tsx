@@ -1,8 +1,8 @@
-import useAuth from "@/hooks/useAuth";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { FaBell } from "react-icons/fa";
-import { IoSearchOutline } from "react-icons/io5";
+import useAuth from "@/hooks/useAuth"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import { FaBell } from "react-icons/fa"
+import { IoSearchOutline } from "react-icons/io5"
 
 
 function Header() {
